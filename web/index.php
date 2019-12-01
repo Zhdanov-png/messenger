@@ -11,9 +11,14 @@ $mess= new Mess();
 
 <div class="row">
     <pre>
-       <?php 
+      
+            <?php 
+
+              
+            
            if (isset($_POST["_from"]))
-               echo "test_".$_POST['_from'];
+               $mess->setSend($_POST["_from"],$_POST["_to"],date("Y-m-d h:i:s"),$_POST["_text"],"wait");
+          $mess->Select('demo');        
         ?>
     </pre>
 </div>

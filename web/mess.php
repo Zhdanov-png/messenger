@@ -9,19 +9,24 @@ class Mess
         $this->pdo = new PDO($dsn, $user, $pass, $opt);
     }
     
-    public function Select()
+    public function Select($sender='')
     {
-        $stmt = $pdo->query("SELECT `from`, `to`, `text` FROM messenges");
+        $qq="SELECT `from`, `to`, `datetime`, `text` FROM messenges ;";
+       // echo $qq;
+        $stmt = $this->pdo->query($qq);
+        
         while ($row = $stmt->fetch())
         {
-            echo $row['from'] ." ". $row['to'] ." ".$row['text'] ."\n";
+            echo $row['from'] ." ". $row['to'] ." ". $row['datetime'] ." "."\n".$row['text'] ."\n";
         }
 
     }
     
-   public function setSend()
+   public function setSend($from,$to,$datetime,$text,$status)
     {
-        
+        $sql = "INSERT INTO messenges (`from`, `to`, `datetime`, `text`,`status`) VALUES (:from, :to, :datetime, :text, :status);";   
+        $stm = $this->pdo->prepare($sql);
+        $stm->execute(array( ':from'=>$from, ':to'=>$to, ':datetime'=>$datetime, ':text'=>$text, ':status'=>$status ));
     } 
     
     public function getSend()
